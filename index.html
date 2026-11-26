@@ -105,6 +105,11 @@ h2{font-family:var(--serif);font-weight:700;font-size:clamp(2rem,4vw,3rem);lette
 .skill b{display:block;font-weight:500}
 .skill small{color:var(--muted)}
 
+.peer .row{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px}
+.peer .row a{color:var(--accent);text-underline-offset:4px}
+.peer .row a:hover{color:#fff}
+.peer .row em{color:var(--muted);font-size:.9rem}
+.panel .in div+div{margin-top:6px}
 /* CURSOS (acordeón) */
 .course{border-top:1px solid var(--line)}
 .course:last-child{border-bottom:1px solid var(--line)}
@@ -123,7 +128,7 @@ h2{font-family:var(--serif);font-weight:700;font-size:clamp(2rem,4vw,3rem);lette
 /* COMPAÑEROS */
 .peers{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
 .peer{display:block;text-decoration:none;background:var(--bg2);border:1px solid var(--line);padding:22px;transition:border-color .2s,transform .2s}
-.peer:hover{border-color:var(--accent);transform:translateY(-3px)}
+.peer:hover{border-color:var(--accent)}
 .peer b{display:block;font-weight:500;font-size:1.05rem}
 .peer span{color:var(--muted);font-size:.9rem}
 
@@ -281,7 +286,7 @@ footer .name{font-family:var(--serif);color:#fff;font-size:1.4rem;margin-bottom:
 <section class="block" id="companeros">
   <div class="wrap">
     <h2>Compañeros</h2>
-    <p class="sub">Las páginas web de mis compañeros de clase.</p>
+    <p class="sub">Mis compañeros de clase y sus páginas web.</p>
     <div class="peers" id="lista-peers"></div>
   </div>
 </section>
@@ -295,30 +300,46 @@ footer .name{font-family:var(--serif);color:#fff;font-size:1.4rem;margin-bottom:
 
 <script>
 /* ====== EDITA AQUÍ TUS DATOS ====== */
-// Reemplaza cada "#" por el enlace real.
 const CURSOS = [
-  {s:"</>", n:"Introducción a Computación", p:"Prof. Ernesto Cuadros Vargas", t:"Perfil", u:"#"},
-  {s:"{ }", n:"Fundamentos de Programación", p:"Prof. Yessenia Deysi Yari Ramos", t:"LinkedIn", u:"#"},
-  {s:"∑", n:"Fundamentos Matemáticos para Computación", p:"Dra. Sabrina Suárez Calcina", t:"CTI Vitae", u:"#"},
-  {s:"IVU", n:"Introducción a la Vida Universitaria", p:"Prof. Gabriela Ponce Reinoso", t:"LinkedIn", u:"#"},
-  {s:"∀", n:"Lógica", p:"Prof. Kristel Gisselle Loayza Cruz", t:"LinkedIn", u:"#"},
-  {s:"¶", n:"Comunicación I", p:"Prof. Angel David Rodríguez Cruz", t:"LinkedIn", u:"#"}
+  {s:"</>", n:"Introducción a Computación", profs:[
+    {n:"Ernesto Cuadros Vargas", li:"https://www.linkedin.com/in/ecuadrosv/"},
+    {n:"Rosmery Violeta Quispe Zavala", li:"https://www.linkedin.com/in/rosmery-violeta-quispe-zavala-58374638/"}]},
+  {s:"{ }", n:"Fundamentos de Programación", profs:[
+    {n:"Yessenia Deysi Yari Ramos", li:"https://www.linkedin.com/in/yessenia-yari-b4778139/"}]},
+  {s:"∑", n:"Fundamentos Matemáticos para Computación", profs:[
+    {n:"Dra. Sabrina Suárez Calcina", li:""}]},
+  {s:"IVU", n:"Introducción a la Vida Universitaria", profs:[
+    {n:"Gabriela Ponce Reinoso", li:"https://www.linkedin.com/in/gabriela-ponce-145b06149/"}]},
+  {s:"∀", n:"Lógica", profs:[
+    {n:"Kristel Gisselle Loayza Cruz", li:"https://www.linkedin.com/in/kristel-gisselle-loayza-cruz-abb3b039b/"}]},
+  {s:"¶", n:"Comunicación I", profs:[
+    {n:"Angel David Rodríguez Cruz", li:"https://www.linkedin.com/in/angel-rodriguez-cruz-58b78b85/"}]}
 ];
-const MI_LINKEDIN = "https://www.linkedin.com/in/britney-darline-apaza-quispe-21a80a451/"; // tu LinkedIn
+const MI_LINKEDIN = "https://www.linkedin.com/in/britney-darline-apaza-quispe-21a80a451/";
+// li = LinkedIn, web = su página web ("" si no tiene todavía)
 const COMPANEROS = [
-  {n:"Cinthia", u:"https://cinthia-tech609.github.io/"},
-  {n:"Compañero 2", u:"#"},
-  {n:"Compañero 3", u:"#"},
-  {n:"Compañero 4", u:"#"}
+  {n:"Cinthia Luz Mamani Chata", li:"https://www.linkedin.com/in/cinthia-luz-mamani-chata-833624437/", web:"https://cinthia-tech609.github.io/"},
+  {n:"Andres Caballero", li:"https://www.linkedin.com/in/andres-caballero-5a2367436/", web:"https://apocalipto3000.github.io/Andres_Caballero/"},
+  {n:"Emely Mirella Anccari Lopez", li:"https://www.linkedin.com/in/emely-mirella-anccari-lopez-9371a043a/", web:"https://emelyanccari-ops.github.io/"},
+  {n:"José Manuel Alviar", li:"https://www.linkedin.com/in/jos%C3%A9-manuel-alviar-6889b33a3/", web:"https://josealviar-acc.github.io/"},
+  {n:"Juan Gabriel Huanaco Quispe", li:"https://www.linkedin.com/in/juan-gabriel-huanaco-quispe-47750128b/", web:"https://guanaco20.github.io/UCSP_CS/"},
+  {n:"Rodrigo Raúl Estefano Espinoza Concha", li:"https://www.linkedin.com/in/rodrigo-espinoza-b49b363b4/", web:"https://rreec-253.github.io/MyPage/"},
+  {n:"Sebastian Andre Ochoa Ortiz", li:"https://www.linkedin.com/in/sebastian-ochoa-ortiz-272197367/", web:"https://sebasochoa.github.io/"},
+  {n:"Zeeshan Muhammad Corimanya", li:"https://www.linkedin.com/in/zeeshan-muhammad-corimanya-3b5744435/", web:"https://zeeshanmcorimanya.github.io/"},
+  {n:"Bianka Camila Hacha Calienes", li:"", web:"https://biankahacha-ui.github.io/"},
+  {n:"Jorge Manuel Firata Quispe", li:"https://www.linkedin.com/in/jorge-manuel-firata-quispe-40b648282/", web:"https://jorgemanu.github.io/Mi-pagina-web/"}
 ];
 /* ================================== */
+
+const A = (u,t)=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
 
 // Cursos (acordeón)
 const lc = document.getElementById("lista-cursos");
 CURSOS.forEach(c=>{
   const d = document.createElement("div"); d.className="course";
+  const profs = c.profs.map(p=>`<div>${p.n}${p.li?" · "+A(p.li,"LinkedIn"):""}</div>`).join("");
   d.innerHTML = `<button aria-expanded="false"><span class="sym">${c.s}</span><span class="cname">${c.n}</span><span class="plus">+</span></button>
-  <div class="panel"><div><div class="in">${c.p} · <a href="${c.u}" target="_blank" rel="noopener">${c.t}</a></div></div></div>`;
+  <div class="panel"><div><div class="in">${profs}</div></div></div>`;
   const b = d.querySelector("button");
   b.addEventListener("click",()=>{
     const open = d.classList.toggle("open");
@@ -330,9 +351,9 @@ CURSOS.forEach(c=>{
 // Compañeros
 const lp = document.getElementById("lista-peers");
 COMPANEROS.forEach(p=>{
-  const a = document.createElement("a"); a.className="peer"; a.href=p.u; a.target="_blank"; a.rel="noopener";
-  a.innerHTML = `<b>${p.n}</b><span>Ver su página web</span>`;
-  lp.appendChild(a);
+  const d = document.createElement("div"); d.className="peer";
+  d.innerHTML = `<b>${p.n}</b><span class="row">${p.li?A(p.li,"LinkedIn"):""}${p.web?A(p.web,"Página web"):'<em>Página web próximamente</em>'}</span>`;
+  lp.appendChild(d);
 });
 
 // Filtro de habilidades
